@@ -4,9 +4,10 @@ from telegram.ext import Updater, MessageHandler, Filters
 from telegram.ext import CommandHandler
 from dictionary import get_info
 
-telegram_bot_token = "5359987473:AAHOMJU39XupHBSNEH2OgcU6jSGCAbDW1Vc"
+PORT = int(os.environ.get('PORT', '8443'))
 
-updater = Updater(token=telegram_bot_token, use_context=True)
+TOKEN = '5359987473:AAHOMJU39XupHBSNEH2OgcU6jSGCAbDW1Vc'
+updater = Updater(token=TOKEN, use_context=True)
 dispatcher = updater.dispatcher
 
 
@@ -84,8 +85,12 @@ dispatcher.add_handler(MessageHandler(Filters.text, get_word_info))
 
 # ------------ updater.start_polling()
 
-updater.start_webhook(listen="0.0.0.0",
-                      port=int(os.environ.get('PORT', 5000)),
-                      url_path=telegram_bot_token,
-                      webhook_url=  + telegram_bot_token
-                      )
+
+
+
+updater.start_webhook(
+        listen="0.0.0.0",
+        port=int(PORT),
+        url_path=TOKEN,
+        webhook_url='https://yourherokuappname.herokuapp.com/' + TOKEN
+    )                      
